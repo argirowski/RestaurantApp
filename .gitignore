@@ -1,0 +1,11 @@
+# Ignore .vs folder in root and all subfolders
+.vs/
+**/.vs/
+
+# Ignore bin folders in root and all subfolders
+bin/
+**/bin/
+
+# Ignore obj folders in root and all subfolders
+obj/
+**/obj/
