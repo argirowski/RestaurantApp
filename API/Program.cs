@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Application.Extensions;
 using Infrastructure.Extensions;
 using Infrastructure.Persistence;
 using Infrastructure.Seed;
@@ -10,17 +10,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApi();
-;
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 var app = builder.Build();
-var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
-await seeder.Seed();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<RestaurantsDBContext>();
+    dbContext.Database.Migrate();
+    var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+    await seeder.Seed();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

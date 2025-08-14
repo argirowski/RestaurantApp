@@ -30,6 +30,7 @@ namespace Infrastructure.Seed
                     Category = "Italian",
                     HasDelivery = true,
                     ContactEmail = "info@pastapalace.com",
+                    ContactNumber = "123-456-7890",
                     Address = new Address
                     {
                         City = "Rome",
@@ -64,6 +65,7 @@ namespace Infrastructure.Seed
                     Category = "Japanese",
                     HasDelivery = true,
                     ContactEmail = "contact@sushispot.com",
+                    ContactNumber = "987-654-3210",
                     Address = new Address
                     {
                         City = "Tokyo",
