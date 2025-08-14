@@ -2,7 +2,7 @@
 
 namespace Application.Features.Commands.Update
 {
-    public class UpdateRestaurantCommand : IRequest<bool>
+    public class UpdateRestaurantCommand : IRequest<Unit>
 
     {
         public Guid Id { get; set; }

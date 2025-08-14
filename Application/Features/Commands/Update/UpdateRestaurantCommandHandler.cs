@@ -1,13 +1,17 @@
-﻿using Application.Features.Commands.Delete;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
 
 namespace Application.Features.Commands.Update
 {
-    public class UpdateRestaurantCommandHandler(ILogger<UpdateRestaurantCommand> logger, IRestaurantsRepository restaurantsRepository) : IRequestHandler<UpdateRestaurantCommand, bool>
+    public class UpdateRestaurantCommandHandler(
+        ILogger<UpdateRestaurantCommandHandler> logger,
+        IRestaurantsRepository restaurantsRepository,
+        IMapper mapper
+    ) : IRequestHandler<UpdateRestaurantCommand, Unit>
     {
-        public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Updating restaurant with ID: {Id}", request.Id);
             var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.Id);
@@ -15,14 +19,12 @@ namespace Application.Features.Commands.Update
             if (restaurant == null)
             {
                 logger.LogWarning("Restaurant with ID: {Id} not found", request.Id);
-                return false;
+                return Unit.Value;
             }
-            restaurant.Name = request.Name;
-            restaurant.Description = request.Description;
-            restaurant.HasDelivery = request.HasDelivery;
 
+            mapper.Map(request, restaurant);
             await restaurantsRepository.UpdateRestaurantAsync(restaurant);
-            return true;
+            return Unit.Value;
         }
     }
 }

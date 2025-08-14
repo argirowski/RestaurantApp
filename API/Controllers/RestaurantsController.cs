@@ -56,12 +56,8 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid id, [FromBody] UpdateRestaurantCommand command)
         {
             command.Id = id;
-            var updatedRestaurant = await mediator.Send(command);
-            if (updatedRestaurant)
-            {
-                return NoContent();
-            }
-            return NotFound(new { Message = "Restaurant not found." });
+            await mediator.Send(command);
+            return NoContent();
         }
     }
 }
