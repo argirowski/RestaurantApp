@@ -14,6 +14,14 @@ namespace Application.Mapping
                 .ForMember(c => c.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street))
                 .ForMember(c => c.Dishes, opt => opt.MapFrom(src => src.Dishes));
 
+            CreateMap<CreateRestaurantDTO, Restaurant>().ForMember(a => a.Address, opt => opt.MapFrom(
+                srce => new Address
+                {
+                    City = srce.City,
+                    Street = srce.Street,
+                    PostalCode = srce.PostalCode
+                }
+                ));
         }
     }
 }

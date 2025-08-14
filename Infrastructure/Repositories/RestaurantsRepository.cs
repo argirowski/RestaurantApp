@@ -22,5 +22,11 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(r => r.Id == id);
             return restaurant;
         }
+        public async Task<Restaurant> CreateRestaurantAsync(Restaurant restaurant)
+        {
+            dBContext.Restaurants.Add(restaurant);
+            await dBContext.SaveChangesAsync();
+            return restaurant;
+        }
     }
 }

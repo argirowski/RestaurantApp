@@ -7,5 +7,6 @@ namespace Application.Interfaces
     {
         Task<IEnumerable<RestaurantDTO>> GetAllRestaurantsAsync();
         Task<RestaurantDTO?> GetRestaurantByIdAsync(Guid id);
+        Task<RestaurantDTO> CreateRestaurantAsync(CreateRestaurantDTO createRestaurantDTO);
     }
 }

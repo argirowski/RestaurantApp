@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
 
 namespace Application.Extensions
 {
@@ -8,8 +9,12 @@ namespace Application.Extensions
     {
         public static void AddApplicationServices(this IServiceCollection services)
         {
+            var applicationAssembly = typeof(ServiceCollectionExtensions).Assembly;
             services.AddScoped<IRestaurantsService, RestaurantsService>();
-            services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
+            // Register auto-mapper profiles from this assembly
+            services.AddAutoMapper(applicationAssembly);
+            // Register FluentValidation validators from this assembly
+            services.AddValidatorsFromAssembly(applicationAssembly);
         }
     }
 }
