@@ -1,6 +1,4 @@
-﻿using Application.Interfaces;
-using Application.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 
 namespace Application.Extensions
@@ -10,7 +8,11 @@ namespace Application.Extensions
         public static void AddApplicationServices(this IServiceCollection services)
         {
             var applicationAssembly = typeof(ServiceCollectionExtensions).Assembly;
-            services.AddScoped<IRestaurantsService, RestaurantsService>();
+            services.AddMediatR(cfg =>
+            {
+                // Register MediatR handlers from this assembly
+                cfg.RegisterServicesFromAssembly(applicationAssembly);
+            });
             // Register auto-mapper profiles from this assembly
             services.AddAutoMapper(applicationAssembly);
             // Register FluentValidation validators from this assembly

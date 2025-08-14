@@ -1,12 +1,10 @@
-﻿using Application.DTOs;
-using FluentValidation;
-using Domain.Entities;
+﻿using FluentValidation;
 
-namespace Application.Valdiators
+namespace Application.Features.Commands.Create
 {
-    public class CreateRestaurantDTOValidator : AbstractValidator<CreateRestaurantDTO>
+    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
     {
-        public CreateRestaurantDTOValidator()
+        public CreateRestaurantCommandValidator()
         {
             RuleFor(n => n.Name).Length(3, 100);
             RuleFor(n => n.Description).NotEmpty().WithMessage("Description Is Required.");

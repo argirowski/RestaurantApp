@@ -1,11 +1,13 @@
-﻿namespace Domain.Entities
+﻿using Domain.Enums;
+
+namespace Domain.Entities
 {
     public class Restaurant
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
-        public RestaurantCategory Category { get; set; }
+        public RestaurantCategoryEnum Category { get; set; }
         public bool HasDelivery { get; set; }
         public string? ContactEmail { get; set; }
         public string? ContactNumber { get; set; }

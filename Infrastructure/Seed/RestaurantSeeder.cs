@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Infrastructure.Persistence;
 
 namespace Infrastructure.Seed
@@ -27,7 +28,7 @@ namespace Infrastructure.Seed
                     Id = Guid.Parse("a3f9c8b2-1e4f-4d6a-9b7e-2c3f8a9d2e1f"),
                     Name = "Pasta Palace",
                     Description = "Authentic Italian pasta dishes.",
-                    Category = RestaurantCategory.Italian,
+                    Category = RestaurantCategoryEnum.Italian,
                     HasDelivery = true,
                     ContactEmail = "info@pastapalace.com",
                     ContactNumber = "123-456-7890",
@@ -62,7 +63,7 @@ namespace Infrastructure.Seed
                     Id = Guid.Parse("c9e2f1a4-3b7d-4a9e-8f2c-6d1a3b9e7f4c"),
                     Name = "Sushi Spot",
                     Description = "Fresh sushi and sashimi.",
-                    Category = RestaurantCategory.Japanese,
+                    Category = RestaurantCategoryEnum.Japanese,
                     HasDelivery = true,
                     ContactEmail = "contact@sushispot.com",
                     ContactNumber = "987-654-3210",
