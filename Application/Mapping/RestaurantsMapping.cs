@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Features.Commands.Create;
+using Application.Features.Commands.Update;
 using AutoMapper;
 using Domain.Entities;
 
@@ -15,6 +16,7 @@ namespace Application.Mapping
                 .ForMember(c => c.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street))
                 .ForMember(c => c.Dishes, opt => opt.MapFrom(src => src.Dishes));
 
+            CreateMap<UpdateRestaurantCommand, Restaurant>();
             CreateMap<CreateRestaurantCommand, Restaurant>().ForMember(a => a.Address, opt => opt.MapFrom(
                 srce => new Address
                 {

@@ -8,5 +8,6 @@ namespace Domain.Interfaces
         Task<Restaurant?> GetRestaurantByIdAsync(Guid id);
         Task<Restaurant> CreateRestaurantAsync(Restaurant restaurant);
         Task DeleteRestaurantAsync(Restaurant restaurant);
+        Task<bool> UpdateRestaurantAsync(Restaurant restaurant);
     }
 }

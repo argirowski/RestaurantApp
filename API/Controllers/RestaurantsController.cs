@@ -1,5 +1,6 @@
 ﻿using Application.Features.Commands.Create;
 using Application.Features.Commands.Delete;
+using Application.Features.Commands.Update;
 using Application.Features.Queries.GetAll;
 using Application.Features.Queries.GetSingle;
 using MediatR;
@@ -39,11 +40,24 @@ namespace API.Controllers
             var createdRestaurant = await mediator.Send(command);
             return CreatedAtAction(nameof(GetRestaurantById), new { id = createdRestaurant.Id }, createdRestaurant);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] Guid id)
         {
             var result = await mediator.Send(new DeleteRestaurantCommand(id));
             if (result)
+            {
+                return NoContent();
+            }
+            return NotFound(new { Message = "Restaurant not found." });
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid id, [FromBody] UpdateRestaurantCommand command)
+        {
+            command.Id = id;
+            var updatedRestaurant = await mediator.Send(command);
+            if (updatedRestaurant)
             {
                 return NoContent();
             }
