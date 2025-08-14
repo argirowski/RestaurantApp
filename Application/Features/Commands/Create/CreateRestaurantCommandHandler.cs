@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Commands.Create
 {
-    public class CreateRestaurantCommandHandler(ILogger logger, IMapper mapper, IRestaurantsRepository restaurantsRepository) : IRequestHandler<CreateRestaurantCommand, RestaurantDTO>
+    public class CreateRestaurantCommandHandler(ILogger<CreateRestaurantCommandHandler> logger, IMapper mapper, IRestaurantsRepository restaurantsRepository) : IRequestHandler<CreateRestaurantCommand, RestaurantDTO>
     {
         public async Task<RestaurantDTO> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
         {

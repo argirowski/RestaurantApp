@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Queries.GetSingle
 {
-    internal class GetSingleRestaurantQueryHandler(ILogger logger, IMapper mapper, IRestaurantsRepository restaurantsRepository) : IRequestHandler<GetSingleRestaurantQuery, RestaurantDTO?>
+    internal class GetSingleRestaurantQueryHandler(ILogger<GetSingleRestaurantQueryHandler> logger, IMapper mapper, IRestaurantsRepository restaurantsRepository) : IRequestHandler<GetSingleRestaurantQuery, RestaurantDTO?>
     {
         public async Task<RestaurantDTO?> Handle(GetSingleRestaurantQuery request, CancellationToken cancellationToken)
         {

@@ -28,5 +28,11 @@ namespace Infrastructure.Repositories
             await dBContext.SaveChangesAsync();
             return restaurant;
         }
+
+        public async Task DeleteRestaurantAsync(Restaurant restaurant)
+        {
+            dBContext.Restaurants.Remove(restaurant);
+            await dBContext.SaveChangesAsync();
+        }
     }
 }

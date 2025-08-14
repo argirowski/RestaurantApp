@@ -7,5 +7,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<Restaurant>> GetAllRestaurantsAsync();
         Task<Restaurant?> GetRestaurantByIdAsync(Guid id);
         Task<Restaurant> CreateRestaurantAsync(Restaurant restaurant);
+        Task DeleteRestaurantAsync(Restaurant restaurant);
     }
 }

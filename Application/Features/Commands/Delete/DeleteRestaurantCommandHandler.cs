@@ -1,0 +1,23 @@
+﻿using Domain.Interfaces;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace Application.Features.Commands.Delete
+{
+    public class DeleteRestaurantCommandHandler(ILogger<DeleteRestaurantCommand> logger, IRestaurantsRepository restaurantsRepository) : IRequestHandler<DeleteRestaurantCommand, bool>
+    {
+        public async Task<bool> Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
+        {
+            logger.LogInformation("Deleting restaurant with ID: {Id}", request.Id);
+            var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.Id);
+
+            if (restaurant == null)
+            {
+                logger.LogWarning("Restaurant with ID: {Id} not found", request.Id);
+                return false;
+            }
+            await restaurantsRepository.DeleteRestaurantAsync(restaurant);
+            return true;
+        }
+    }
+}
