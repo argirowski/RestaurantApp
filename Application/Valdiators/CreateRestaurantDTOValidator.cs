@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using FluentValidation;
+using Domain.Entities;
 
 namespace Application.Valdiators
 {
@@ -9,7 +10,9 @@ namespace Application.Valdiators
         {
             RuleFor(n => n.Name).Length(3, 100);
             RuleFor(n => n.Description).NotEmpty().WithMessage("Description Is Required.");
-            RuleFor(n => n.Category).NotEmpty().WithMessage("Please enter a valid category");
+            RuleFor(n => n.Category)
+                .IsInEnum()
+                .WithMessage("Please enter a valid category");
             RuleFor(e => e.ContactEmail).EmailAddress().WithMessage("Please enter a valid email address");
             RuleFor(e => e.ContactNumber)
                 .Matches(@"^\+?[1-9]\d{1,14}$")
