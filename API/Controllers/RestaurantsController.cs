@@ -1,4 +1,5 @@
-﻿using Application.Features.Commands.Create;
+﻿using Application.DTOs;
+using Application.Features.Commands.Create;
 using Application.Features.Commands.Delete;
 using Application.Features.Commands.Update;
 using Application.Features.Queries.GetAll;
@@ -13,14 +14,14 @@ namespace API.Controllers
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAllRestaurants()
+        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants()
         {
             var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
             return Ok(restaurants);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRestaurantById([FromRoute] Guid id)
+        public async Task<ActionResult<RestaurantDTO?>> GetRestaurantById([FromRoute] Guid id)
         {
             var restaurant = await mediator.Send(new GetSingleRestaurantQuery(id));
             if (restaurant is null)
@@ -42,6 +43,8 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] Guid id)
         {
             var result = await mediator.Send(new DeleteRestaurantCommand(id));
@@ -53,6 +56,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid id, [FromBody] UpdateRestaurantCommand command)
         {
             command.Id = id;
