@@ -1,11 +1,15 @@
-# Ignore .vs folder in root and all subfolders
-.vs/
+# Ignore all vs, bin and obj folders in any subdirectory
+**/bin/
+**/obj/
 **/.vs/
 
-# Ignore bin folders in root and all subfolders
-bin/
-**/bin/
+# Ignore everything in API/Logs But keep the folder itself
+API/Logs/*
+!API/Logs/.gitkeep
 
-# Ignore obj folders in root and all subfolders
-obj/
-**/obj/
+# General
+*.user
+*.suo
+*.cache
+*.log
+.DS_Store
