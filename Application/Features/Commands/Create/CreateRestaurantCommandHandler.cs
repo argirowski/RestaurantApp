@@ -11,7 +11,7 @@ namespace Application.Features.Commands.Create
     {
         public async Task<RestaurantDTO> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Creating a new restaurant with name: {Name}", request.Name);
+            logger.LogInformation("Creating a new restaurant with name: {@Restaurant}", request);
             var restaurant = mapper.Map<Restaurant>(request);
             var restaurantRepo = await restaurantsRepository.CreateRestaurantAsync(restaurant);
             return mapper.Map<RestaurantDTO>(restaurantRepo);

@@ -10,7 +10,7 @@ namespace Application.Features.Queries.GetSingle
     {
         public async Task<RestaurantDTO?> Handle(GetSingleRestaurantQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Fetching restaurant with ID: {Id}", request.Id);
+            logger.LogInformation("Fetching restaurant with ID: {RestaurantId}", request.Id);
             var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.Id);
             var restaurantDTO = mapper.Map<RestaurantDTO?>(restaurant);
             return restaurantDTO;

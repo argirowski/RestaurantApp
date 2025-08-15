@@ -13,7 +13,7 @@ namespace Application.Features.Commands.Update
     {
         public async Task<Unit> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Updating restaurant with ID: {Id}", request.Id);
+            logger.LogInformation("Updating restaurant with ID: {RestaurantId} with {@UpdatedRestaurant}", request.Id, request);
             var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.Id);
 
             if (restaurant == null)

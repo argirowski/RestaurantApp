@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -25,6 +27,7 @@ using (var scope = app.Services.CreateScope())
     await seeder.Seed();
 }
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
