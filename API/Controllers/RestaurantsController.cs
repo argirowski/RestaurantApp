@@ -5,12 +5,14 @@ using Application.Features.Restaurants.Commands.Update;
 using Application.Features.Restaurants.Queries.GetAll;
 using Application.Features.Restaurants.Queries.GetSingle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RestaurantsController(IMediator mediator) : ControllerBase
     {
         [HttpGet]

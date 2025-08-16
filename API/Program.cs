@@ -7,26 +7,16 @@ using FluentValidation.AspNetCore;
 using Serilog;
 using API.Middlewares;
 using Domain.Entities;
-using Microsoft.OpenApi.Models;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(a => a.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
-{
-    Type = SecuritySchemeType.Http,
-    Scheme = "Bearer"
-}));
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
-builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
+builder.AddPresentationLayer();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -48,7 +38,7 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeLoggingMiddleware>();
 app.UseHttpsRedirection();
 
-app.MapIdentityApi<User>();
+app.MapGroup("api/identity").MapIdentityApi<User>();
 
 app.UseAuthorization();
 
