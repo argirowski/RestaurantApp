@@ -5,6 +5,7 @@ using Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation.AspNetCore;
 using Serilog;
+using API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
@@ -26,6 +28,7 @@ using (var scope = app.Services.CreateScope())
     var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
     await seeder.Seed();
 }
+
 // Configure the HTTP request pipeline.
 app.UseSerilogRequestLogging();
 if (app.Environment.IsDevelopment())
@@ -34,6 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
