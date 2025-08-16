@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities;
+using Domain.Interfaces;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Infrastructure.Seed;
@@ -13,7 +14,10 @@ namespace Infrastructure.Extensions
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("ConnectionString");
-            services.AddDbContext<RestaurantsDBContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<RestaurantsDBContext>(options => options.UseSqlServer(connectionString).EnableSensitiveDataLogging());
+
+            services.AddIdentityApiEndpoints<User>()
+                .AddEntityFrameworkStores<RestaurantsDBContext>();
 
             services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
             services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
