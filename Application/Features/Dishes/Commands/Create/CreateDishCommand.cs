@@ -2,7 +2,7 @@
 
 namespace Application.Features.Dishes.Commands.Create
 {
-    public class CreateDishCommand : IRequest
+    public class CreateDishCommand : IRequest<Guid>
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;

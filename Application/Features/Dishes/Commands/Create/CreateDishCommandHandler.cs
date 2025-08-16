@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Dishes.Commands.Create
 {
-    public class CreateDishCommandHandler(ILogger<CreateRestaurantCommandHandler> logger, IMapper mapper, IRestaurantsRepository restaurantsRepository, IDishesRepository dishesRepository) : IRequestHandler<CreateDishCommand>
+    public class CreateDishCommandHandler(ILogger<CreateRestaurantCommandHandler> logger, IMapper mapper, IRestaurantsRepository restaurantsRepository, IDishesRepository dishesRepository) : IRequestHandler<CreateDishCommand, Guid>
     {
-        public async Task Handle(CreateDishCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateDishCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Creating a new dish: {@DisheRequest}", request);
             var restaurant = await restaurantsRepository.GetRestaurantByIdAsync(request.RestaurantId);
@@ -20,7 +20,7 @@ namespace Application.Features.Dishes.Commands.Create
                 throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
             }
             var dish = mapper.Map<Dish>(request);
-            await dishesRepository.CreateDishAsync(dish);
+            return await dishesRepository.CreateDishAsync(dish);
         }
     }
 }

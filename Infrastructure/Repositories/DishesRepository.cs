@@ -13,24 +13,10 @@ namespace Infrastructure.Repositories
             return dish.Id;
         }
 
-        public Task DeleteDishAsync(Dish dish)
+        public async Task DeleteDishAsync(IEnumerable<Dish> dishes)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Dish>> GetAllDishesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Dish?> GetDishByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateDishAsync(Dish dish)
-        {
-            throw new NotImplementedException();
+            dBContext.Dishes.RemoveRange(dishes);
+            await dBContext.SaveChangesAsync();
         }
     }
 }

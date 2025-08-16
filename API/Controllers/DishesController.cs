@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Features.Dishes.Commands.Create;
+using Application.Features.Dishes.Commands.Delete;
 using Application.Features.Dishes.Queries.GetAll;
 using Application.Features.Dishes.Queries.GetSingle;
 using MediatR;
@@ -15,8 +16,8 @@ namespace API.Controllers
         public async Task<IActionResult> CreateDish([FromRoute] Guid restaurantId, CreateDishCommand createDishCommand)
         {
             createDishCommand.RestaurantId = restaurantId;
-            await mediator.Send(createDishCommand);
-            return Created();
+            var dishId = await mediator.Send(createDishCommand);
+            return CreatedAtAction(nameof(GetDishForRestaurantById), new { restaurantId, dishId }, null);
         }
 
         [HttpGet]
@@ -31,6 +32,15 @@ namespace API.Controllers
         {
             var singleDish = await mediator.Send(new GetSingleDishForRestaurantQuery(restaurantId, dishId));
             return Ok(singleDish);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteDishForRestaurant([FromRoute] Guid restaurantId)
+        {
+            await mediator.Send(new DeleteDishForRestaurantCommand(restaurantId));
+            return NoContent();
         }
     }
 }

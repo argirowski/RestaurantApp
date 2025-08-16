@@ -35,7 +35,7 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
             var createdRestaurant = await mediator.Send(command);
-            return CreatedAtAction(nameof(GetRestaurantById), new { id = createdRestaurant.Id }, createdRestaurant);
+            return CreatedAtAction(nameof(GetRestaurantById), new { id = createdRestaurant.Id }, null);
         }
 
         [HttpDelete("{id}")]
