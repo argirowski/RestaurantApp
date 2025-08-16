@@ -24,10 +24,6 @@ namespace API.Controllers
         public async Task<ActionResult<RestaurantDTO?>> GetRestaurantById([FromRoute] Guid id)
         {
             var restaurant = await mediator.Send(new GetSingleRestaurantQuery(id));
-            if (restaurant is null)
-            {
-                return NotFound(new { Message = "Restaurant not found." });
-            }
             return Ok(restaurant);
         }
 
@@ -48,11 +44,7 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteRestaurant([FromRoute] Guid id)
         {
             var result = await mediator.Send(new DeleteRestaurantCommand(id));
-            if (result)
-            {
-                return NoContent();
-            }
-            return NotFound(new { Message = "Restaurant not found." });
+            return NoContent();
         }
 
         [HttpPut("{id}")]

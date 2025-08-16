@@ -1,4 +1,6 @@
-﻿namespace API.Middlewares
+﻿using Domain.Exceptions;
+
+namespace API.Middlewares
 {
     public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : IMiddleware
     {
@@ -8,10 +10,16 @@
             {
                 await next.Invoke(context);
             }
+            catch (NotFoundException notFoundException)
+            {
+                logger.LogWarning(notFoundException.Message);
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                await context.Response.WriteAsync(notFoundException.Message);
+            }
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Something went wrong.");
             }
         }

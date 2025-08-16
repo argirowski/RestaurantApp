@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Queries.GetSingle
 {
-    public class GetSingleRestaurantQuery : IRequest<RestaurantDTO?>
+    public class GetSingleRestaurantQuery : IRequest<RestaurantDTO>
     {
         public GetSingleRestaurantQuery(Guid id)
         {

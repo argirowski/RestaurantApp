@@ -1,7 +1,9 @@
-﻿using Domain.Interfaces;
+﻿using AutoMapper;
+using Domain.Entities;
+using Domain.Exceptions;
+using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using AutoMapper;
 
 namespace Application.Features.Commands.Update
 {
@@ -19,7 +21,7 @@ namespace Application.Features.Commands.Update
             if (restaurant == null)
             {
                 logger.LogWarning("Restaurant with ID: {Id} not found", request.Id);
-                return Unit.Value;
+                throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
             }
 
             mapper.Map(request, restaurant);
