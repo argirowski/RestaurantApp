@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Application.Features.Commands.Delete
+namespace Application.Features.Restaurants.Commands.Delete
 {
     public class DeleteRestaurantCommandValidator : AbstractValidator<DeleteRestaurantCommand>
     {

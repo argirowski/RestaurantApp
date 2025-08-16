@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Features.Commands.Update
+namespace Application.Features.Restaurants.Commands.Update
 {
     public class UpdateRestaurantCommand : IRequest<Unit>
 

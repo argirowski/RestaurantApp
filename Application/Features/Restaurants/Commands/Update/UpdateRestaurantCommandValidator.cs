@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Application.Features.Commands.Update
+namespace Application.Features.Restaurants.Commands.Update
 {
     public class UpdateRestaurantCommandValidator : AbstractValidator<UpdateRestaurantCommand>
     {

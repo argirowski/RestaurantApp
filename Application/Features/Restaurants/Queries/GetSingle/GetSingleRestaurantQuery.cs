@@ -1,7 +1,7 @@
 ﻿using Application.DTOs;
 using MediatR;
 
-namespace Application.Features.Queries.GetSingle
+namespace Application.Features.Restaurants.Queries.GetSingle
 {
     public class GetSingleRestaurantQuery : IRequest<RestaurantDTO>
     {

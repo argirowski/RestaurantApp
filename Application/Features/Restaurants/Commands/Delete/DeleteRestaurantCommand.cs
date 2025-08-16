@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Features.Commands.Delete
+namespace Application.Features.Restaurants.Commands.Delete
 {
     public class DeleteRestaurantCommand(Guid id) : IRequest<Unit>
     {

@@ -6,7 +6,7 @@ using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.Queries.GetSingle
+namespace Application.Features.Restaurants.Queries.GetSingle
 {
     internal class GetSingleRestaurantQueryHandler(ILogger<GetSingleRestaurantQueryHandler> logger, IMapper mapper, IRestaurantsRepository restaurantsRepository) : IRequestHandler<GetSingleRestaurantQuery, RestaurantDTO>
     {

@@ -5,7 +5,7 @@ using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.Commands.Update
+namespace Application.Features.Restaurants.Commands.Update
 {
     public class UpdateRestaurantCommandHandler(
         ILogger<UpdateRestaurantCommandHandler> logger,

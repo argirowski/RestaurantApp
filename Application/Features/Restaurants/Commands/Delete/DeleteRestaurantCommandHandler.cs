@@ -4,7 +4,7 @@ using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.Commands.Delete
+namespace Application.Features.Restaurants.Commands.Delete
 {
     public class DeleteRestaurantCommandHandler(ILogger<DeleteRestaurantCommand> logger, IRestaurantsRepository restaurantsRepository) : IRequestHandler<DeleteRestaurantCommand, Unit>
     {

@@ -1,6 +1,6 @@
 ﻿using Application.DTOs;
-using Application.Features.Commands.Create;
-using Application.Features.Commands.Update;
+using Application.Features.Restaurants.Commands.Create;
+using Application.Features.Restaurants.Commands.Update;
 using AutoMapper;
 using Domain.Entities;
 

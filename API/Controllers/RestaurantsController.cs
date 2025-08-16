@@ -1,9 +1,9 @@
 ﻿using Application.DTOs;
-using Application.Features.Commands.Create;
-using Application.Features.Commands.Delete;
-using Application.Features.Commands.Update;
-using Application.Features.Queries.GetAll;
-using Application.Features.Queries.GetSingle;
+using Application.Features.Restaurants.Commands.Create;
+using Application.Features.Restaurants.Commands.Delete;
+using Application.Features.Restaurants.Commands.Update;
+using Application.Features.Restaurants.Queries.GetAll;
+using Application.Features.Restaurants.Queries.GetSingle;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -4,7 +4,7 @@ using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.Queries.GetAll
+namespace Application.Features.Restaurants.Queries.GetAll
 {
     public class GetAllRestaurantsQueryHandler(ILogger<GetAllRestaurantsQueryHandler> logger, IMapper mapper, IRestaurantsRepository restaurantsRepository) : IRequestHandler<GetAllRestaurantsQuery, IEnumerable<RestaurantDTO>>
     {

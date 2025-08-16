@@ -2,7 +2,7 @@
 using Domain.Enums;
 using MediatR;
 
-namespace Application.Features.Commands.Create
+namespace Application.Features.Restaurants.Commands.Create
 {
     public class CreateRestaurantCommand : IRequest<RestaurantDTO>
     {
