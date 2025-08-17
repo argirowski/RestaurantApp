@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using Application.Claims;
 
 namespace Application.Extensions
 {
@@ -17,6 +18,8 @@ namespace Application.Extensions
             services.AddAutoMapper(applicationAssembly);
             // Register FluentValidation validators from this assembly
             services.AddValidatorsFromAssembly(applicationAssembly);
+
+            services.AddScoped<IUserContext, UserContext>();
         }
     }
 }

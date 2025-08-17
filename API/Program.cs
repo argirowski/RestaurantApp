@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddPresentationLayer();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -38,7 +39,7 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeLoggingMiddleware>();
 app.UseHttpsRedirection();
 
-app.MapGroup("api/identity").MapIdentityApi<User>();
+app.MapGroup("api/identity").WithTags("Identity").MapIdentityApi<User>();
 
 app.UseAuthorization();
 

@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace Application.Claims
 {
-    public class UserContext(IHttpContextAccessor httpContextAccessor)
+    public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContext
     {
         public CurrentUser? GetCurrentUser()
         {
@@ -17,8 +17,8 @@ namespace Application.Claims
                 return null;
             }
 
-            var userId = user.FindFirst(t => t.Type == ClaimTypes.NameIdentifier);
-            var email = user.FindFirst(t => t.Type == ClaimTypes.Email);
+            var userId = user.FindFirst(t => t.Type == ClaimTypes.NameIdentifier)!.Value;
+            var email = user.FindFirst(t => t.Type == ClaimTypes.Email)!.Value;
             var roles = user.Claims.Where(t => t.Type == ClaimTypes.Role)!
                                        .Select(t => t.Value);
 
