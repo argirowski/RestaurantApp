@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Seed
 {
@@ -16,7 +17,30 @@ namespace Infrastructure.Seed
                     dBContext.Restaurants.AddRange(restaurants);
                     await dBContext.SaveChangesAsync();
                 }
+
+                if (!dBContext.Roles.Any())
+                {
+                    var roles = GetRoles();
+                    dBContext.Roles.AddRange(roles);
+                    await dBContext.SaveChangesAsync();
+                }
             }
+        }
+
+        private IEnumerable<IdentityRole> GetRoles()
+        {
+            List<IdentityRole> roles = [
+                new (UserRolesEnum.Admin.ToString()) {
+                    NormalizedName = UserRolesEnum.Admin.ToString().ToUpperInvariant()
+                },
+                new (UserRolesEnum.User.ToString()) {
+                    NormalizedName = UserRolesEnum.User.ToString().ToUpperInvariant()
+                },
+                new (UserRolesEnum.Owner.ToString()) {
+                    NormalizedName = UserRolesEnum.Owner.ToString().ToUpperInvariant()
+                }
+            ];
+            return roles;
         }
 
         private IEnumerable<Restaurant> GetRestaurants()

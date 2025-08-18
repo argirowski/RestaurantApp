@@ -30,12 +30,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantCommand command)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var createdRestaurant = await mediator.Send(command);
             return CreatedAtAction(nameof(GetRestaurantById), new { id = createdRestaurant.Id }, null);
         }
