@@ -13,5 +13,8 @@ namespace Domain.Entities
         public string? ContactNumber { get; set; }
         public Address? Address { get; set; }
         public List<Dish> Dishes { get; set; } = new List<Dish>();
+
+        public User Owner { get; set; } = default!;
+        public string OwnerId { get; set; } = default!;
     }
 }
