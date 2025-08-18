@@ -1,4 +1,5 @@
 ﻿using Application.Features.UserDetails.Commands.Create;
+using Application.Features.UserDetails.Commands.Delete;
 using Application.Features.UserDetails.Commands.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -25,5 +26,14 @@ namespace API.Controllers
             await mediator.Send(addUserRoleCommand);
             return NoContent();
         }
+
+        [HttpDelete("userRole")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UnAssignUserRole(UnAssignUserRoleCommand unAssignUserRoleCommand)
+        {
+            await mediator.Send(unAssignUserRoleCommand);
+            return NoContent();
+        }
+
     }
 }

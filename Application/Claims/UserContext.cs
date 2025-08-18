@@ -21,8 +21,11 @@ namespace Application.Claims
             var email = user.FindFirst(t => t.Type == ClaimTypes.Email)!.Value;
             var roles = user.Claims.Where(t => t.Type == ClaimTypes.Role)!
                                        .Select(t => t.Value);
+            var nationality = user.FindFirst(t => t.Type == "Nationality")?.Value;
+            var dateOfBirthAsString = user.FindFirst(t => t.Type == "DateOfBirth")?.Value;
+            var dateOfBirth = dateOfBirthAsString == null ? (DateOnly?)null : DateOnly.ParseExact(dateOfBirthAsString, "yyyy-MM-dd");
 
-            return new CurrentUser(userId, email, roles);
+            return new CurrentUser(userId, email, roles, nationality, dateOfBirth);
         }
     }
 }

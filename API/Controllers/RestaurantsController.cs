@@ -23,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "HasNationality")]
         public async Task<ActionResult<RestaurantDTO?>> GetRestaurantById([FromRoute] Guid id)
         {
             var restaurant = await mediator.Send(new GetSingleRestaurantQuery(id));
