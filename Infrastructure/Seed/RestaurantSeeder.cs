@@ -11,9 +11,10 @@ namespace Infrastructure.Seed
         {
             if (await dBContext.Database.CanConnectAsync())
             {
+                var owner = await SeedOwnerUser();
                 if (!dBContext.Restaurants.Any())
                 {
-                    var restaurants = GetRestaurants();
+                    var restaurants = GetRestaurants(owner);
                     dBContext.Restaurants.AddRange(restaurants);
                     await dBContext.SaveChangesAsync();
                 }
@@ -25,6 +26,27 @@ namespace Infrastructure.Seed
                     await dBContext.SaveChangesAsync();
                 }
             }
+        }
+
+        private async Task<User> SeedOwnerUser()
+        {
+            var ownerId = "c241e806-e622-4265-90e2-b0c343f0b9cb";
+            var owner = await dBContext.Users.FindAsync(ownerId);
+            if (owner == null)
+            {
+                owner = new User
+                {
+                    Id = ownerId,
+                    UserName = "Owner User",
+                    Email = "owner@test.com",
+                    EmailConfirmed = true,
+                    Nationality = "Japanese",
+                    DateOfBirth = new DateOnly(1980, 1, 1)
+                };
+                dBContext.Users.Add(owner);
+                await dBContext.SaveChangesAsync();
+            }
+            return owner;
         }
 
         private IEnumerable<IdentityRole> GetRoles()
@@ -43,7 +65,7 @@ namespace Infrastructure.Seed
             return roles;
         }
 
-        private IEnumerable<Restaurant> GetRestaurants()
+        private IEnumerable<Restaurant> GetRestaurants(User owner)
         {
             List<Restaurant> restaurants = new List<Restaurant>
             {
@@ -80,7 +102,9 @@ namespace Infrastructure.Seed
                             Price = 10.99m,
                             RestaurantId = Guid.Parse("f3a7c9e2-6d1b-4f8e-9a2c-1e3b7d5f4c9a")
                         }
-                    }
+                    },
+                    Owner = owner,
+                    OwnerId = owner.Id
                 },
                 new Restaurant
                 {
@@ -106,7 +130,6 @@ namespace Infrastructure.Seed
                             Description = "Sushi roll with crab, avocado, and cucumber.",
                             Price = 8.99m,
                             RestaurantId = Guid.Parse("d1f3a9c7-8b2e-4f6e-9a3c-2e7d1b5f4c8a")
-
                         },
                         new Dish
                         {
@@ -116,7 +139,9 @@ namespace Infrastructure.Seed
                             Price = 14.99m,
                             RestaurantId = Guid.Parse("d1f3a9c7-8b2e-4f6e-9a3c-2e7d1b5f4c8a")
                         }
-                    }
+                    },
+                    Owner = owner,
+                    OwnerId = owner.Id
                 },
             };
             return restaurants;
