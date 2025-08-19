@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Interfaces;
 using MediatR;
@@ -9,7 +10,7 @@ namespace Application.Features.Dishes.Commands.Delete
     public class DeleteDishForRestaurantCommandHandler(
         ILogger<DeleteDishForRestaurantCommandHandler> logger,
         IRestaurantsRepository restaurantsRepository,
-        IDishesRepository dishesRepository) : IRequestHandler<DeleteDishForRestaurantCommand, Unit>
+        IRestaurantAuthorizationServices restaurantAuthorizationServices) : IRequestHandler<DeleteDishForRestaurantCommand, Unit>
     {
         public async Task<Unit> Handle(DeleteDishForRestaurantCommand request, CancellationToken cancellationToken)
         {
@@ -20,6 +21,13 @@ namespace Application.Features.Dishes.Commands.Delete
                 logger.LogWarning("Restaurant with ID {RestaurantId} not found.", request.RestaurantId);
                 throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
             }
+
+            if (!restaurantAuthorizationServices.Authorize(restaurant, ResourceOperationEnum.Delete))
+            {
+                logger.LogWarning("Unauthorized attempt to delete restaurant with ID: {RestaurantId}", request.RestaurantId);
+                throw new AccessForbiddenException();
+            }
+
             return Unit.Value;
         }
     }

@@ -6,5 +6,6 @@
         Nationality,
         DateOfBirth,
         IsAdult,
+        CreatedAtLeastTwoRestaurants,
     }
 }

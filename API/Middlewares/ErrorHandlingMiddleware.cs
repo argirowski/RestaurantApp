@@ -16,6 +16,12 @@ namespace API.Middlewares
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync(notFoundException.Message);
             }
+            catch (AccessForbiddenException accessForbiddenException)
+            {
+                logger.LogWarning("Access Forbidden");
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                await context.Response.WriteAsync(accessForbiddenException.Message);
+            }
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);

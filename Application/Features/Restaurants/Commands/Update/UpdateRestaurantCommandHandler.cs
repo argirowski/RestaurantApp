@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Interfaces;
 using MediatR;
@@ -10,7 +11,8 @@ namespace Application.Features.Restaurants.Commands.Update
     public class UpdateRestaurantCommandHandler(
         ILogger<UpdateRestaurantCommandHandler> logger,
         IRestaurantsRepository restaurantsRepository,
-        IMapper mapper
+        IMapper mapper,
+        IRestaurantAuthorizationServices restaurantAuthorizationServices
     ) : IRequestHandler<UpdateRestaurantCommand, Unit>
     {
         public async Task<Unit> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
@@ -22,6 +24,12 @@ namespace Application.Features.Restaurants.Commands.Update
             {
                 logger.LogWarning("Restaurant with ID: {Id} not found", request.Id);
                 throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
+            }
+
+            if (!restaurantAuthorizationServices.Authorize(restaurant, ResourceOperationEnum.Update))
+            {
+                logger.LogWarning("Unauthorized attempt to update restaurant with ID: {Id}", request.Id);
+                throw new AccessForbiddenException();
             }
 
             mapper.Map(request, restaurant);
