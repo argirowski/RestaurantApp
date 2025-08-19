@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 
 namespace Domain.Interfaces
 {
@@ -9,6 +10,6 @@ namespace Domain.Interfaces
         Task<Restaurant> CreateRestaurantAsync(Restaurant restaurant);
         Task DeleteRestaurantAsync(Restaurant restaurant);
         Task UpdateRestaurantAsync(Restaurant restaurant);
-        Task<(IEnumerable<Restaurant>, int)> GetAllMatchingRestaurantResultsAsync(string? searchParams, int pageSize, int pageNumber);
+        Task<(IEnumerable<Restaurant>, int)> GetAllMatchingRestaurantResultsAsync(string? searchParams, int pageSize, int pageNumber, string? sortBy, SortDirectionEnum sortDirectionEnum);
     }
 }

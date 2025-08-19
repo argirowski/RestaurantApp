@@ -1,7 +1,9 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -14,25 +16,6 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
             return restaurants;
         }
-
-        public async Task<(IEnumerable<Restaurant>, int)> GetAllMatchingRestaurantResultsAsync(string? searchParams, int pageSize, int pageNumber)
-        {
-            var searchParamsLower = searchParams?.ToLowerInvariant();
-
-            var baseQuery = dBContext.Restaurants
-                .Where(r => searchParamsLower == null || (r.Name.ToLowerInvariant().Contains(searchParamsLower) ||
-                            r.Description.ToLowerInvariant().Contains(searchParamsLower)))
-                .Include(r => r.Dishes);
-
-            var totalCount = await baseQuery.CountAsync();
-
-            var restaurants = await baseQuery
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-            return (restaurants, totalCount);
-        }
-
         public async Task<Restaurant?> GetRestaurantByIdAsync(Guid id)
         {
             var restaurant = await dBContext.Restaurants
@@ -57,6 +40,45 @@ namespace Infrastructure.Repositories
         {
             dBContext.Restaurants.Update(restaurant);
             await dBContext.SaveChangesAsync();
+        }
+
+        public async Task<(IEnumerable<Restaurant>, int)> GetAllMatchingRestaurantResultsAsync(
+            string? searchParams,
+             int pageSize, int pageNumber,
+              string? sortBy,
+               SortDirectionEnum sortDirectionEnum)
+        {
+            var searchPhraseLower = searchParams?.ToLower();
+
+            var baseQuery = dBContext
+                .Restaurants
+                .Where(r => searchPhraseLower == null || (r.Name.ToLower().Contains(searchPhraseLower)
+                                                       || r.Description.ToLower().Contains(searchPhraseLower)));
+
+            var totalCount = await baseQuery.CountAsync();
+
+            if (sortBy != null)
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Restaurant, object>>>
+            {
+                { nameof(Restaurant.Name), r => r.Name },
+                { nameof(Restaurant.Description), r => r.Description },
+                { nameof(Restaurant.Category), r => r.Category },
+            };
+
+                var selectedColumn = columnsSelector[sortBy];
+
+                baseQuery = sortDirectionEnum == SortDirectionEnum.Ascending
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
+            }
+
+            var restaurants = await baseQuery
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (restaurants, totalCount);
         }
     }
 }
