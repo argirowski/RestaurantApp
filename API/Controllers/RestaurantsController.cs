@@ -17,9 +17,9 @@ namespace API.Controllers
     {
         [HttpGet]
         [Authorize(Policy = "CreatedAtLeastTwoRestaurants")]
-        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants()
+        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAllRestaurants([FromQuery] GetAllRestaurantsQuery getAllRestaurantsQuery)
         {
-            var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
+            var restaurants = await mediator.Send(getAllRestaurantsQuery);
             return Ok(restaurants);
         }
 
