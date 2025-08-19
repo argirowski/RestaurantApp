@@ -21,9 +21,9 @@ namespace Application.Features.Restaurants.Queries.GetAll
                 request.SortBy,
                 request.SortDirection);
 
-            var restaurantsDtos = mapper.Map<IEnumerable<RestaurantDTO>>(restaurants);
+            var restaurantsDTOs = mapper.Map<IEnumerable<RestaurantDTO>>(restaurants);
 
-            var result = new PagedResults<RestaurantDTO>(restaurantsDtos, totalCount, request.PageSize, request.PageNumber);
+            var result = new PagedResults<RestaurantDTO>(restaurantsDTOs, totalCount, request.PageSize, request.PageNumber);
             return result;
 
         }
