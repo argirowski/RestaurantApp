@@ -4,6 +4,7 @@ using Application.Features.Restaurants.Commands.Delete;
 using Application.Features.Restaurants.Commands.Update;
 using Application.Features.Restaurants.Queries.GetAll;
 using Application.Features.Restaurants.Queries.GetSingle;
+using Domain.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "HasNationality")]
+        [Authorize(Policy = PolicyNames.HasNationality)]
         public async Task<ActionResult<RestaurantDTO?>> GetRestaurantById([FromRoute] Guid id)
         {
             var restaurant = await mediator.Send(new GetSingleRestaurantQuery(id));
@@ -32,7 +33,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Owner")]
+        [Authorize(Policy = UserRoles.Owner)]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantCommand command)
         {
             var createdRestaurant = await mediator.Send(command);

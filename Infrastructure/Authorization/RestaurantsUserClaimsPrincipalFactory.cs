@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Domain.Enums;
+﻿using Domain.Constants;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
@@ -16,12 +16,12 @@ namespace Infrastructure.Authorization
             var id = await GenerateClaimsAsync(user);
             if (user.Nationality != null)
             {
-                id.AddClaim(new Claim(PolicyNamesEnum.Nationality.ToString(), user.Nationality));
+                id.AddClaim(new Claim(PolicyNames.Nationality, user.Nationality));
             }
 
             if (user.DateOfBirth != null)
             {
-                id.AddClaim(new Claim(PolicyNamesEnum.DateOfBirth.ToString(), user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
+                id.AddClaim(new Claim(PolicyNames.DateOfBirth, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
             }
 
             return new ClaimsPrincipal(id);

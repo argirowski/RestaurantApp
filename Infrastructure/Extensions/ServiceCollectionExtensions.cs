@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Constants;
+using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
 using Infrastructure.Authorization;
@@ -31,9 +32,9 @@ namespace Infrastructure.Extensions
             services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
             services.AddScoped<IDishesRepository, DishesRepository>();
             services.AddAuthorizationBuilder()
-                .AddPolicy(PolicyNamesEnum.HasNationality.ToString(), builder => builder.RequireClaim(PolicyNamesEnum.Nationality.ToString(), "Macedonian", "Japanese"))
-                .AddPolicy(PolicyNamesEnum.IsAdult.ToString(), builder => builder.AddRequirements(new MinimumAgeRequirement(18)))
-                .AddPolicy(PolicyNamesEnum.CreatedAtLeastTwoRestaurants.ToString(), builder => builder.AddRequirements(new CreateMultipleRestaurantsRequirement(2)));
+                .AddPolicy(PolicyNames.HasNationality, builder => builder.RequireClaim(Domain.Constants.PolicyNames.Nationality, "Macedonian", "Japanese"))
+                .AddPolicy(PolicyNames.IsAdult, builder => builder.AddRequirements(new MinimumAgeRequirement(18)))
+                .AddPolicy(PolicyNames.CreatedAtLeastTwoRestaurants, builder => builder.AddRequirements(new CreateMultipleRestaurantsRequirement(2)));
 
             services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, CreateMultipleRestaurantsRequirementHandler>();

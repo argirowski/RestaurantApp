@@ -3,6 +3,7 @@ using Application.Features.Dishes.Commands.Create;
 using Application.Features.Dishes.Commands.Delete;
 using Application.Features.Dishes.Queries.GetAll;
 using Application.Features.Dishes.Queries.GetSingle;
+using Domain.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "IsAdult")]
+        [Authorize(Policy = PolicyNames.IsAdult)]
         public async Task<ActionResult<IEnumerable<DishDTO>>> GetAllDishesForRestaurant([FromRoute] Guid restaurantId)
         {
             var dishes = await mediator.Send(new GetAllDishesForRestaurantQuery(restaurantId));

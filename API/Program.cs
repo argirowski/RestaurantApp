@@ -3,7 +3,6 @@ using Infrastructure.Extensions;
 using Infrastructure.Persistence;
 using Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
-using FluentValidation.AspNetCore;
 using Serilog;
 using API.Middlewares;
 using Domain.Entities;

@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Constants;
+using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -52,14 +53,14 @@ namespace Infrastructure.Seed
         private IEnumerable<IdentityRole> GetRoles()
         {
             List<IdentityRole> roles = [
-                new (UserRolesEnum.Admin.ToString()) {
-                    NormalizedName = UserRolesEnum.Admin.ToString().ToUpperInvariant()
+                new (UserRoles.Admin) {
+                    NormalizedName = UserRoles.Admin.ToString().ToUpperInvariant()
                 },
-                new (UserRolesEnum.User.ToString()) {
-                    NormalizedName = UserRolesEnum.User.ToString().ToUpperInvariant()
+                new (UserRoles.User) {
+                    NormalizedName = UserRoles.User.ToString().ToUpperInvariant()
                 },
-                new (UserRolesEnum.Owner.ToString()) {
-                    NormalizedName = UserRolesEnum.Owner.ToString().ToUpperInvariant()
+                new (UserRoles.Owner) {
+                    NormalizedName = UserRoles.Owner.ToString().ToUpperInvariant()
                 }
             ];
             return roles;
