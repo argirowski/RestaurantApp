@@ -37,7 +37,7 @@ namespace API.Tests.Middlewares
 
             // Assert
             Assert.Equal(StatusCodes.Status404NotFound, context.Response.StatusCode);
-            Assert.Equal("Not found", GetResponseBody(context));
+            Assert.Equal("Not found with id: ResourceId doesn't exist", GetResponseBody(context));
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace API.Tests.Middlewares
 
             // Assert
             Assert.Equal(StatusCodes.Status403Forbidden, context.Response.StatusCode);
-            Assert.Equal("Forbidden", GetResponseBody(context));
+            Assert.Equal("Exception of type 'Domain.Exceptions.AccessForbiddenException' was thrown.", GetResponseBody(context));
         }
 
         [Fact]

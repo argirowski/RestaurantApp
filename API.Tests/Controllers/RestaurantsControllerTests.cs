@@ -40,8 +40,13 @@ namespace API.Tests.Controllers
         public async Task GetRestaurantById_ShouldReturnOk()
         {
             // Arrange
+            var restaurantId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            _restaurantsRepositoryMock
+                .Setup(r => r.GetRestaurantByIdAsync(restaurantId))
+                .ReturnsAsync(new Domain.Entities.Restaurant { Id = restaurantId, Name = "Restaurants" });
+
             var client = _webApplicationFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/restaurants/1");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/restaurants/{restaurantId}");
             // Act
             var response = await client.SendAsync(request);
             // Assert

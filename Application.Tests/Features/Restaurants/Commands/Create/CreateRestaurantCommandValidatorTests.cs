@@ -59,7 +59,7 @@ namespace Application.Tests.Features.Restaurants.Commands.Create
         [Fact]
         public void ContactNumber_Invalid_FailsValidation()
         {
-            var command = new CreateRestaurantCommand { Name = "ValidName", Description = "desc", Category = RestaurantCategoryEnum.Japanese, ContactNumber = "123" };
+            var command = new CreateRestaurantCommand { Name = "ValidName", Description = "desc", Category = RestaurantCategoryEnum.Japanese, ContactNumber = "abc" };
             var result = _validator.TestValidate(command);
             result.ShouldHaveValidationErrorFor(c => c.ContactNumber);
         }

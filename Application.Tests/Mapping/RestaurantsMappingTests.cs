@@ -14,7 +14,11 @@ namespace Application.Tests.Mapping
 
         public RestaurantsMappingTests()
         {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<RestaurantsMapping>());
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<RestaurantsMapping>();
+                cfg.AddProfile<DishesMapping>();
+            });
             _mapper = config.CreateMapper();
         }
 
