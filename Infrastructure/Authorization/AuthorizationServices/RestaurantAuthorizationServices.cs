@@ -1,4 +1,5 @@
 ﻿using Application.Claims;
+using Domain.Constants;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
@@ -21,7 +22,7 @@ namespace Infrastructure.Authorization.AuthorizationServices
                 return true;
             }
 
-            if (resourceOperationEnum == ResourceOperationEnum.Delete && user.IsInRole(UserRolesEnum.Admin.ToString()))
+            if (resourceOperationEnum == ResourceOperationEnum.Delete && user.IsInRole(UserRoles.Admin))
             {
                 logger.LogInformation("Administrator user, delete operation - successful authorization");
                 return true;
