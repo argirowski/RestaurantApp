@@ -29,7 +29,7 @@ namespace Application.Tests.Mapping
                 Category = RestaurantCategoryEnum.Japanese,
                 Description = "Great food",
                 Address = new Address { City = "Tokyo", Street = "Main St", PostalCode = "12345" },
-                Dishes = new[] { new Dish { Id = Guid.NewGuid(), Name = "Sushi", Price = 10 } }
+                Dishes = new List<Dish> { new Dish { Id = Guid.NewGuid(), Name = "Sushi", Price = 10 } }
             };
 
             // Act

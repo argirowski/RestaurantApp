@@ -30,7 +30,7 @@ namespace API.Tests.Middlewares
             var loggerMock = new Mock<ILogger<ErrorHandlingMiddleware>>();
             var middleware = new ErrorHandlingMiddleware(loggerMock.Object);
             var context = CreateHttpContext();
-            RequestDelegate next = _ => throw new NotFoundException("Not found");
+            RequestDelegate next = _ => throw new NotFoundException("Not found", "ResourceId");
 
             // Act
             await middleware.InvokeAsync(context, next);
@@ -47,7 +47,7 @@ namespace API.Tests.Middlewares
             var loggerMock = new Mock<ILogger<ErrorHandlingMiddleware>>();
             var middleware = new ErrorHandlingMiddleware(loggerMock.Object);
             var context = CreateHttpContext();
-            RequestDelegate next = _ => throw new AccessForbiddenException("Forbidden");
+            RequestDelegate next = _ => throw new AccessForbiddenException();
 
             // Act
             await middleware.InvokeAsync(context, next);
