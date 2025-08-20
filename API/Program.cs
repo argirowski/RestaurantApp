@@ -45,3 +45,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{
+    // This class is used to allow the use of the `Program` class in the test project.
+    // It is necessary for the test project to access the `Program` class without
+    // having to reference the entire API project.
+}
