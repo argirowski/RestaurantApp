@@ -1,6 +1,7 @@
 ﻿using Application.Features.UserDetails.Commands.Create;
 using Application.Features.UserDetails.Commands.Delete;
 using Application.Features.UserDetails.Commands.Update;
+using Domain.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace API.Controllers
         }
 
         [HttpPost("userRole")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(UserRoles.Admin)]
         public async Task<IActionResult> AssignUserRole(AddUserRoleCommand addUserRoleCommand)
         {
             await mediator.Send(addUserRoleCommand);
@@ -28,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("userRole")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(UserRoles.Admin)]
         public async Task<IActionResult> UnAssignUserRole(UnAssignUserRoleCommand unAssignUserRoleCommand)
         {
             await mediator.Send(unAssignUserRoleCommand);
